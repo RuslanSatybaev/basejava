@@ -5,9 +5,7 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10];
-    Resume car = new Resume();
     int size = 0;
-    int index = 0;
 
     void clear() {
         Arrays.fill(storage, null);
@@ -15,32 +13,45 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        storage[index] = r;
-        index++;
-        size++;
+        int index = getIndex(r.getUuid());
+        if (index != -1) {
+            System.out.println("ERROR");
+        } else if (size == storage.length) {
+            System.out.println("Storage overflow");
+        } else {
+            storage[size] = r;
+            size++;
+
+        }
     }
 
-    Resume get(String uuid) {
-        for (Resume value : storage) {
-            if (value != null && value.uuid.equals(uuid)) {
-                car = value;
-                break;
-            } else {
-                car = null;
-            }
+    void update(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
+            System.out.println("ERROR");
+        } else {
+            storage[index] = r;
         }
-        return car;
+    }
+
+    public Resume get(String uuid) {
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("ERROR");
+            return null;
+        }
+        return storage[index];
     }
 
     void delete(String uuid) {
-        for (Resume value : storage) {
-            if (value.uuid.equals(uuid)) {
-                index = findIndex(value);
-                storage[index] = null;
-                break;
-            }
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("ERROR");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
-        size--;
     }
 
     /**
@@ -48,12 +59,8 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
         Resume[] resumes = new Resume[size];
-        int size = 0;
-        for (Resume s : ArrayStorage.this.storage) {
-            if (s != null) {
-                resumes[size] = s;
-                size++;
-            }
+        for (int i = 0; i < size; i++) {
+            resumes[i] = storage[i];
         }
         return resumes;
     }
@@ -62,14 +69,12 @@ public class ArrayStorage {
         return size;
     }
 
-    private int findIndex(Resume car) {
-        int index = 0;
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i].equals(car)) {
-                index = i;
-                break;
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 }
