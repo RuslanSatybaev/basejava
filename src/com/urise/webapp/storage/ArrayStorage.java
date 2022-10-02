@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
     public static final int STORAGE_LIMIT = 10_000;
     private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
@@ -28,7 +28,7 @@ public class ArrayStorage {
         }
     }
 
-    void update(Resume r) {
+    public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index == -1) {
             System.out.println("Resume " + r.getUuid() + " not exist");
