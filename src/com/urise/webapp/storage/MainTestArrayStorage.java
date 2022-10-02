@@ -16,6 +16,8 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
+        System.out.println(r1.hashCode());
+
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
