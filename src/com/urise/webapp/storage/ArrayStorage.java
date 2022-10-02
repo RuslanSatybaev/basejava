@@ -1,3 +1,7 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -7,12 +11,12 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10];
     int size = 0;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, null);
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index != -1) {
             System.out.println("ERROR");
@@ -43,7 +47,7 @@ public class ArrayStorage {
         return storage[index];
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
             System.out.println("ERROR");
@@ -57,7 +61,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] resumes = new Resume[size];
         for (int i = 0; i < size; i++) {
             resumes[i] = storage[i];
@@ -65,7 +69,7 @@ public class ArrayStorage {
         return resumes;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
