@@ -8,46 +8,52 @@ import java.util.List;
 public class ListStorage extends AbstractStorage {
     protected List<Resume> resumeList = new ArrayList<>();
 
-    @Override
-    public void clear() {
-        resumeList.clear();
-        size = 0;
-    }
 
     @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            return null;
-        }
-        return resumeList.get(index);
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return resumeList.toArray(new Resume[size]);
-    }
-
-    @Override
-    protected void deleteElement(int index) {
-        resumeList.remove(index);
-    }
-
-    @Override
-    protected void insertElement(Resume r, int index) {
+    protected void doSave(Resume r, Object searchKey) {
         resumeList.add(r);
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        Resume resume = findResume(uuid, resumeList);
-        return resumeList.indexOf(resume);
+    protected Resume doGet(Object searchKey) {
+        return resumeList.get((Integer) searchKey);
     }
 
-    private static Resume findResume(String uuid, List<Resume> ResumeList) {
-        for (Resume resume : ResumeList) {
-            if (resume.getUuid().equals(uuid)) {
-                return resume;
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        resumeList.set((Integer) searchKey, r);
+    }
+
+    @Override
+    protected void doDelete(Object searchKey) {
+        resumeList.remove(((Integer) searchKey).intValue());
+    }
+
+    @Override
+    public void clear() {
+        resumeList.clear();
+    }
+
+    @Override
+    public int size() {
+        return resumeList.size();
+    }
+
+    @Override
+    public Resume[] getAll() {
+        return resumeList.toArray(new Resume[resumeList.size()]);
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < resumeList.size(); i++) {
+            if (resumeList.get(i).getUuid().equals(uuid)) {
+                return i;
             }
         }
         return null;
