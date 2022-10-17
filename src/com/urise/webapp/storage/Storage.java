@@ -2,6 +2,9 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface Storage {
 
     void clear();
@@ -14,7 +17,14 @@ public interface Storage {
 
     void delete(String uuid);
 
-    Resume[] getAll();
+    default Resume[] getAll() {
+        int STORAGE_LIMIT = 20;
+        Resume[] storage = new Resume[STORAGE_LIMIT];
+        int size = 0;
+        return Arrays.copyOfRange(storage, 0, size);
+    }
+
+    List<Resume> getAllSorted(); // sorted by fullName
 
     int size();
 }

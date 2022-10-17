@@ -6,7 +6,9 @@ import java.util.UUID;
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume> {
+public class Resume {
+
+    private  String fullName;
 
     // Unique identifier
     private final String uuid;
@@ -41,10 +43,5 @@ public class Resume implements Comparable<Resume> {
     @Override
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
-    }
-
-    @Override
-    public int compareTo(Resume r) {
-        return uuid.compareTo(r.uuid);
     }
 }
