@@ -6,6 +6,9 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -13,13 +16,13 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME1 = new Resume(UUID_1);
+    private static final Resume RESUME1 = new Resume(UUID_1, "Name1");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME2 = new Resume(UUID_2);
+    private static final Resume RESUME2 = new Resume(UUID_2, "Name2");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME3 = new Resume(UUID_3);
+    private static final Resume RESUME3 = new Resume(UUID_3, "Name3");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME4 = new Resume(UUID_4);
+    private static final Resume RESUME4 = new Resume(UUID_4, "Name4");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -48,7 +51,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "New name");
         storage.update(newResume);
         assertTrue(newResume == storage.get(UUID_1));
     }
@@ -78,11 +81,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] arrayResumes = storage.getAllSorted().toArray(new Resume[0]);
-        assertEquals(3, arrayResumes.length);
-        assertEquals(RESUME1, arrayResumes[0]);
-        assertEquals(RESUME2, arrayResumes[1]);
-        assertEquals(RESUME3, arrayResumes[2]);
+        List<Resume> allSorted = storage.getAllSorted();
+        assertEquals(3, allSorted.size());
+        assertEquals(allSorted, Arrays.asList(RESUME1, RESUME2, RESUME3));
     }
 
     @Test(expected = NotExistStorageException.class)

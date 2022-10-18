@@ -7,27 +7,27 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapUuidStorage extends AbstractStorage<String> {
+public class MapResumeStorage extends AbstractStorage<Resume> {
     Map<String, Resume> resumeMap = new LinkedHashMap<>();
 
     @Override
-    protected void doSave(Resume r, String uuid) {
-        resumeMap.put(uuid, r);
+    protected void doSave(Resume r, Resume resume) {
+        resumeMap.put(r.getUuid(), r);
     }
 
     @Override
-    protected Resume doGet(String uuid) {
-        return resumeMap.get(uuid);
+    protected Resume doGet(Resume resume) {
+        return resume;
     }
 
     @Override
-    protected void doUpdate(Resume r, String uuid) {
-        resumeMap.put(uuid, r);
+    protected void doUpdate(Resume r, Resume resume) {
+        resumeMap.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(String uuid) {
-        resumeMap.remove(uuid);
+    protected void doDelete(Resume resume) {
+        resumeMap.remove((resume).getUuid());
     }
 
     @Override
@@ -46,12 +46,12 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isExist(String uuid) {
-        return resumeMap.containsKey(uuid);
+    protected boolean isExist(Resume resume) {
+        return resume != null;
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected Resume getSearchKey(String uuid) {
+        return resumeMap.get(uuid);
     }
 }

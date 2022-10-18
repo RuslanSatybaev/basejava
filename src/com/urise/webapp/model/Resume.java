@@ -6,19 +6,22 @@ import java.util.UUID;
 /**
  * Initial resume class
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
 
-    private  String fullName;
+    private final String fullName;
 
     // Unique identifier
     private final String uuid;
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
     }
 
-    public Resume(String uuid) {
+    public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "uuid must not be null");
+        Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
+        this.fullName = fullName;
     }
 
     public String getUuid() {
@@ -27,7 +30,10 @@ public class Resume {
 
     @Override
     public String toString() {
-        return "[" + uuid + "]";
+        return "Resume{" +
+                "fullName='" + fullName + '\'' +
+                ", uuid='" + uuid + '\'' +
+                '}';
     }
 
     @Override
@@ -37,11 +43,20 @@ public class Resume {
 
         Resume resume = (Resume) o;
 
-        return Objects.equals(uuid, resume.uuid);
+        if (!fullName.equals(resume.fullName)) return false;
+        return uuid.equals(resume.uuid);
     }
 
     @Override
     public int hashCode() {
-        return uuid != null ? uuid.hashCode() : 0;
+        int result = fullName.hashCode();
+        result = 31 * result + uuid.hashCode();
+        return result;
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        int cmp = fullName.compareTo(o.fullName);
+        return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
 }
