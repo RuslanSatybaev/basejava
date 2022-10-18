@@ -2,31 +2,28 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
-    protected List<Resume> resumeList = new ArrayList<>();
-
+public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Integer searchKey) {
         resumeList.add(r);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return resumeList.get((Integer) searchKey);
+    protected Resume doGet(Integer searchKey) {
+        return resumeList.get(searchKey);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        resumeList.set((Integer) searchKey, r);
+    protected void doUpdate(Resume r, Integer searchKey) {
+        resumeList.set(searchKey, r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        resumeList.remove(((Integer) searchKey).intValue());
+    protected void doDelete(Integer searchKey) {
+        resumeList.remove((searchKey).intValue());
     }
 
     @Override
@@ -40,12 +37,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return resumeList.toArray(new Resume[resumeList.size()]);
+    protected List<Resume> doCopyAll() {
+        return resumeList;
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return searchKey != null;
     }
 
