@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
 
-    protected Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME1 = new Resume(UUID_1, "Name1");
     private static final String UUID_2 = "uuid2";
@@ -23,6 +22,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME3 = new Resume(UUID_3, "Name3");
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME4 = new Resume(UUID_4, "Name4");
+    protected Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -36,17 +36,18 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME3);
     }
 
-    @Test
-    public void clear() {
-        storage.clear();
-        assertSize(0);
-    }
 
     @Test
     public void save() {
         storage.save(RESUME4);
         assertSize(4);
         assertEquals(RESUME4, storage.get(UUID_4));
+    }
+
+    @Test
+    public void get() {
+        Resume resume = storage.get("uuid1");
+        assertEquals("uuid1", resume.getUuid());
     }
 
     @Test
@@ -57,26 +58,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void updateNotExist() {
-        storage.get("qwert");
-    }
-
-    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_3);
         assertSize(2);
         storage.get(UUID_3);
-    }
-
-    @Test
-    public void size() {
-        assertSize(3);
-    }
-
-    @Test
-    public void get() {
-        Resume resume = storage.get("uuid1");
-        assertEquals("uuid1", resume.getUuid());
     }
 
     @Test
@@ -85,6 +70,23 @@ public abstract class AbstractStorageTest {
         assertEquals(3, allSorted.size());
         assertEquals(allSorted, Arrays.asList(RESUME1, RESUME2, RESUME3));
     }
+
+    @Test
+    public void clear() {
+        storage.clear();
+        assertSize(0);
+    }
+
+    @Test
+    public void size() {
+        assertSize(3);
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() {
+        storage.get("qwert");
+    }
+
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
