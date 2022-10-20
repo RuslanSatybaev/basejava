@@ -58,7 +58,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         List<Resume> list = doCopyAll();
-        Collections.sort(list);
+      //  Collections.sort(list);
         return list;
     }
 
