@@ -1,4 +1,6 @@
-package com.urise.webapp.model;
+package com.urise.webapp.collection;
+
+import com.urise.webapp.model.Resume;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
