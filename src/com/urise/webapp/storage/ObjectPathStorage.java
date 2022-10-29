@@ -4,8 +4,6 @@ import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.List;
 
 public class ObjectPathStorage extends AbstractPathStorage {
     protected ObjectPathStorage(String directory) {
