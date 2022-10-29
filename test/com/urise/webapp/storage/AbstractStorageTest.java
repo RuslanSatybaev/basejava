@@ -15,8 +15,14 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("C:\\Users\\Руслан\\OneDrive\\" +
-            "online_course\\javaops\\projects\\basejava\\io_storage");
+    protected static final File STORAGE_DIR;
+    protected static final String PATHNAME;
+
+    static {
+        PATHNAME = "C:\\Users\\Руслан\\OneDrive\\" +
+                "online_course\\javaops\\projects\\basejava\\io_storage";
+        STORAGE_DIR = new File(PATHNAME);
+    }
 
     private static final String UUID_1 = "uuid1";
     private static final Resume R1;
@@ -33,17 +39,17 @@ public abstract class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.addContacts(ContactType.MAIL,"mail1@ya.ru");
-        R1.addContacts(ContactType.PHONE,"1111");
+        R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContacts(ContactType.PHONE, "1111");
 
         R1.addSections(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.addSections(SectionType.PERSONAL, new TextSection("Personal data"));
         R1.addSections(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
-        R1.addSections(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL","JavaScript"));
+        R1.addSections(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
         R1.addSections(SectionType.EXPERIENCE,
                 new OrganizationSection(
-                        new Organization("Organizations","http:Organization11.ru",
-                                new Organization.Position(2005, Month.JANUARY,"position2","content2"))));
+                        new Organization("Organizations", "http:Organization11.ru",
+                                new Organization.Position(2005, Month.JANUARY, "position2", "content2"))));
     }
 
     protected Storage storage;
