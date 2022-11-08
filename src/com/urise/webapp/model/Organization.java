@@ -16,7 +16,7 @@ import static com.urise.webapp.util.DateUtil.of;
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
     private Link homePage;
-    List<Position> positionList = new ArrayList<>();
+    List<Position> positions = new ArrayList<>();
 
     public Organization() {
     }
@@ -27,7 +27,11 @@ public class Organization implements Serializable {
 
     public Organization(Link homePage, List<Position> positionList) {
         this.homePage = homePage;
-        this.positionList = positionList;
+        this.positions = positionList;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
     }
 
     public Link getHomePage() {
@@ -42,13 +46,13 @@ public class Organization implements Serializable {
         Organization that = (Organization) o;
 
         if (!homePage.equals(that.homePage)) return false;
-        return positionList.equals(that.positionList);
+        return positions.equals(that.positions);
     }
 
     @Override
     public int hashCode() {
         int result = homePage.hashCode();
-        result = 31 * result + positionList.hashCode();
+        result = 31 * result + positions.hashCode();
         return result;
     }
 
@@ -56,7 +60,7 @@ public class Organization implements Serializable {
     public String toString() {
         return "Organization{" +
                 "homePage=" + homePage +
-                ", positionList=" + positionList +
+                ", positionList=" + positions +
                 '}';
     }
 
