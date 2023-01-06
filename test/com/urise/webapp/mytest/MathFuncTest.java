@@ -1,5 +1,6 @@
 package com.urise.webapp.mytest;
 
+import com.urise.webapp.mytest.list.MathFunc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
