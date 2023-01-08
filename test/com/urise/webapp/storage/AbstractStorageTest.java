@@ -4,34 +4,32 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIR;
-
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final Resume R1;
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final Resume R2;
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final Resume R3;
+    private static final String UUID_4 = UUID.randomUUID().toString();
+    private static final Resume R4;
 
     static {
         STORAGE_DIR = Config.get().getStorageDir();
     }
-
-    private static final String UUID_1 = "uuid1";
-    private static final Resume R1;
-    private static final String UUID_2 = "uuid2";
-    private static final Resume R2;
-    private static final String UUID_3 = "uuid3";
-    private static final Resume R3;
-    private static final String UUID_4 = "uuid4";
-    private static final Resume R4;
 
     static {
         R1 = new Resume(UUID_1, "Name1");
@@ -100,7 +98,7 @@ public abstract class AbstractStorageTest {
     public void getAll() {
         List<Resume> allSorted = storage.getAllSorted();
         assertEquals(3, allSorted.size());
-        assertEquals(allSorted, Arrays.asList(R1, R2, R3));
+        assertEquals(Arrays.asList(R1, R2, R3), allSorted);
     }
 
     @Test
