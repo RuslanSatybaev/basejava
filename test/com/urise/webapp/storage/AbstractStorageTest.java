@@ -4,11 +4,12 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,6 @@ public abstract class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-/*
         R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
         R1.addContacts(ContactType.PHONE, "1111");
 
@@ -49,7 +49,6 @@ public abstract class AbstractStorageTest {
                 new OrganizationSection(
                         new Organization("Organizations", "http:Organization11.ru",
                                 new Organization.Position(2005, Month.JANUARY, "position2", "content2"))));
-*/
     }
 
     protected Storage storage;
