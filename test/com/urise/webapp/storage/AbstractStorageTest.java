@@ -1,55 +1,24 @@
 package com.urise.webapp.storage;
 
-
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.ContactType;
+import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.Month;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
+import static com.urise.webapp.TestData.*;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR;
-    private static final String UUID_1 = UUID.randomUUID().toString();
-    private static final Resume R1;
-    private static final String UUID_2 = UUID.randomUUID().toString();
-    private static final Resume R2;
-    private static final String UUID_3 = UUID.randomUUID().toString();
-    private static final Resume R3;
-    private static final String UUID_4 = UUID.randomUUID().toString();
-    private static final Resume R4;
-
-    static {
-        STORAGE_DIR = Config.get().getStorageDir();
-    }
-
-    static {
-        R1 = new Resume(UUID_1, "Name1");
-        R2 = new Resume(UUID_2, "Name2");
-        R3 = new Resume(UUID_3, "Name3");
-        R4 = new Resume(UUID_4, "Name4");
-
-        R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContacts(ContactType.PHONE, "1111");
-
-        R1.addSections(SectionType.OBJECTIVE, new TextSection("Objective1"));
-        R1.addSections(SectionType.PERSONAL, new TextSection("Personal data"));
-        R1.addSections(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
-        R1.addSections(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
-        R1.addSections(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Organizations", "http:Organization11.ru",
-                                new Organization.Position(2005, Month.JANUARY, "position2", "content2"))));
-    }
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
 
@@ -69,7 +38,7 @@ public abstract class AbstractStorageTest {
     public void save() {
         storage.save(R4);
         assertSize(4);
-        assertEquals(R4, storage.get(UUID_4));
+        assertGet(R4);
     }
 
     @Test
@@ -82,6 +51,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1, "New name");
+        R1.addContact(ContactType.MAIL, "mail1@google.com");
+        R1.addContact(ContactType.SKYPE, "NewSkype");
+        R1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_1));
     }
@@ -94,10 +66,13 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        List<Resume> allSorted = storage.getAllSorted();
-        assertEquals(3, allSorted.size());
-        assertEquals(Arrays.asList(R1, R2, R3), allSorted);
+    public void getAllSorted() {
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        assertEquals(Arrays.asList(R1, R2, R3), list);
+        List<Resume> sortedResumes = Arrays.asList(R1, R2, R3);
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, list);
     }
 
     @Test
@@ -113,18 +88,17 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.get("qwert");
+        storage.get("dummy");
     }
-
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
-        storage.get("qwert");
+        storage.get("dummy");
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(R2);
+        storage.save(R1);
     }
 
     private void assertGet(Resume r) {
