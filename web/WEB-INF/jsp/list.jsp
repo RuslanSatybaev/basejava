@@ -1,6 +1,7 @@
-<%@ page import="com.urise.webapp.model.Resume" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.urise.webapp.model.ContactType" %><%--
+<%@ page import="com.urise.webapp.model.ContactType" %>
+<%@ page import="com.urise.webapp.model.ContactType" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   Created by IntelliJ IDEA.
   User: user
   Date: 31.01.2023
@@ -19,18 +20,14 @@
             <th>Name</th>
             <th>Email</th>
         </tr>
-        <%
-            for (Resume resume : (List<Resume>) request.getAttribute("resumes")) {
-        %>
-        <tr>
-            <td><a href="resume?uuid=<%=resume.getUuid()%>"></a><%=resume.getFullName()%>
-            </td>
-            <td><%=resume.getContacts(ContactType.MAIL)%>
-            </td>
-        </tr>
-        <%
-            }
-        %>
+        <c:forEach items="${resumes}" var="resume">
+            ruslan
+            <jsp:useBean id="resume" type="com.urise.webapp.model.Resume"/>
+            <tr>
+                <td><a href="resume?uuid=${resume.uuid}">${resume.fullName}</a></td>
+                <td>${resume.getContacts(ContactType.MAIL)}</td>
+            </tr>
+        </c:forEach>
     </table>
 </section>
 </body>
