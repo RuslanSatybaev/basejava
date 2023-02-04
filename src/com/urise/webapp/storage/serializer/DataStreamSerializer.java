@@ -23,7 +23,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getValue());
             });
 
-            Map<SectionType, Section> sections = r.getSections();
+            Map<SectionType, Section> sections = r.getSection();
             writeCollection(dos, sections.entrySet(), entry -> {
                 SectionType type = entry.getKey();
                 Section section = entry.getValue();

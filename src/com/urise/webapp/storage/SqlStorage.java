@@ -176,7 +176,7 @@ public class SqlStorage implements Storage {
 
     private void insertSections(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid,type, content) VALUES (?,?,?)")) {
-            for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
+            for (Map.Entry<SectionType, Section> e : r.getSection().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
                 Section section = e.getValue();
