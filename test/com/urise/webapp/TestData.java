@@ -22,28 +22,28 @@ public class TestData {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.addContact(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContact(ContactType.PHONE, "1111");
+        R1.setContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.setContact(ContactType.PHONE, "1111");
 
-        R2.addContact(ContactType.SKYPE, "skype2");
-        R2.addContact(ContactType.PHONE, "22222");
+        R2.setContact(ContactType.SKYPE, "skype2");
+        R2.setContact(ContactType.PHONE, "22222");
 
-        R4.addContact(ContactType.SKYPE, "Skype");
-        R4.addContact(ContactType.PHONE, "4444");
+        R4.setContact(ContactType.SKYPE, "Skype");
+        R4.setContact(ContactType.PHONE, "4444");
 
-        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
-        R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
-        R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
-        R1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
-        R1.addSection(SectionType.EXPERIENCE,
+        R2.setSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R2.setSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R2.setSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
+        R2.setSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
+        R2.setSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organizations", "http:Organization11.ru",
-                                new Organization.Position(2005, Month.JANUARY, "position2", "content2"))));
-        R1.addSection(SectionType.EXPERIENCE,
+                                new Organization.Position(2005, Month.JANUARY, "position2", "content102"))));
+        R1.setSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
-                        new Organization("Organizations", "http:Organization11.ru",
-                                new Organization.Position(2005, Month.JANUARY, "position2", "content2"))));
-        R1.addSection(SectionType.EDUCATION,
+                        new Organization("Organization", "http:Organization11.ru",
+                                new Organization.Position(2010, Month.JANUARY, "position2", "content42"))));
+        R1.setSection(SectionType.EDUCATION,
                 new OrganizationSection(
                         new Organization("Institute", null,
                                 new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),

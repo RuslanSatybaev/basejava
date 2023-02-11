@@ -14,9 +14,10 @@ import static com.urise.webapp.util.DateUtil.NOW;
 import static com.urise.webapp.util.DateUtil.of;
 
 public class Organization implements Serializable {
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
     private static final long serialVersionUID = 1L;
-    private Link homePage;
     List<Position> positions = new ArrayList<>();
+    private Link homePage;
 
     public Organization() {
     }
@@ -66,11 +67,16 @@ public class Organization implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
-        private static final long serialVersionUID = 1L;
+        public static final Position EMPTY = new Position();
+
         private LocalDate startDate;
         private LocalDate endDate;
         private String title;
         private String description;
+
+        public Position() {
+
+        }
 
         public Position(int startYear, Month startMonth, String title, String description) {
             this(of(startYear, startMonth), NOW, title, description);
