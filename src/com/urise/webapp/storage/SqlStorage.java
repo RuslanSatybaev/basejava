@@ -176,7 +176,7 @@ public class SqlStorage implements Storage {
 
     private void insertSections(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid,type, content) VALUES (?,?,?)")) {
-            for (Map.Entry<SectionType, Section> e : r.getSection().entrySet()) {
+            for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
                 Section section = e.getValue();
@@ -190,7 +190,7 @@ public class SqlStorage implements Storage {
     private void addContact(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("value");
         if (value != null) {
-            r.addContact(ContactType.valueOf(rs.getString("type")), value);
+            r.setContact(ContactType.valueOf(rs.getString("type")), value);
         }
     }
 
@@ -198,7 +198,7 @@ public class SqlStorage implements Storage {
         String content = rs.getString("content");
         if (content != null) {
             SectionType type = SectionType.valueOf(rs.getString("type"));
-            r.addSection(type, JsonParser.read(content, Section.class));
+            r.setSection(type, JsonParser.read(content, Section.class));
         }
     }
 
